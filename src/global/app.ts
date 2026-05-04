@@ -17,6 +17,26 @@ import '@material/web/radio/radio'
 
 import { registerNavigationApi } from './navigation.js'
 
+function ensureStylesheet(id: string, href: string) {
+  if (document.getElementById(id)) return;
+
+  const link = document.createElement('link');
+  link.id = id;
+  link.rel = 'stylesheet';
+  link.href = href;
+  document.head.appendChild(link);
+}
+
 export default function () {
+  ensureStylesheet(
+    'or-planner-roboto-font',
+    'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap',
+  );
+
+  ensureStylesheet(
+    'or-planner-material-symbols-font',
+    'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=block',
+  );
+
   registerNavigationApi()
 }

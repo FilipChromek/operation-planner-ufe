@@ -16,7 +16,7 @@ h2 { margin: 0; }
 .error { margin: 2rem auto; color: #c00; text-align: center; font-weight: 700; }
 .add-button {
   position: absolute;
-  right: 1rem; bottom: 1rem;
+  right: 1rem; bottom: 4rem;
   --md-filled-icon-button-container-size: 4rem;
   --md-filled-icon-button-icon-size: 3rem;
 }
