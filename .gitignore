@@ -1,0 +1,10 @@
+dist/
+www/
+loader/
+node_modules/
+.stencil/
+.openapi.json
+*.log
+.DS_Store
+.idea
+.vscode

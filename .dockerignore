@@ -1,0 +1,7 @@
+dist
+www
+loader
+node_modules
+.git
+.github
+.openapi.json

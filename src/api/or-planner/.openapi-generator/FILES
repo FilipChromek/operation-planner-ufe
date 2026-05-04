@@ -1,0 +1,15 @@
+.openapi-generator-ignore
+apis/MedicalStaffApi.ts
+apis/OperatingRoomsApi.ts
+apis/PatientsApi.ts
+apis/ScheduledOperationsApi.ts
+apis/index.ts
+index.ts
+models/MedicalStaff.ts
+models/MedicalStaffAvailabilityInner.ts
+models/OperatingRoom.ts
+models/Patient.ts
+models/ProcedureType.ts
+models/ScheduledOperation.ts
+models/index.ts
+runtime.ts
