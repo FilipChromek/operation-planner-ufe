@@ -1,17 +1,158 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
-  position: relative;
-  padding-bottom: 4rem;
 }
-h2 { margin: 0 0 1rem 0; }
-.error { margin: 2rem auto; color: #c00; text-align: center; font-weight: 700; }
-.add-button {
-  position: fixed;
-  right: 2rem;
-  bottom: 6rem;
-  z-index: 10;
-  --md-filled-icon-button-container-size: 4rem;
-  --md-filled-icon-button-icon-size: 3rem;
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-title h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1c1b1f;
+}
+
+.page-title md-icon {
+  color: #6750a4;
+  font-size: 28px;
+}
+
+.count {
+  background: #e8def8;
+  color: #6750a4;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 100px;
+}
+
+.error {
+  margin: 2rem auto;
+  color: #b3261e;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  background: #fef2f2;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  color: #79747e;
+  text-align: center;
+}
+
+.empty-state md-icon {
+  font-size: 64px;
+  color: #cac4d0;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.18s, transform 0.18s;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(103,80,164,0.18), 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.card-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  flex-shrink: 0;
+  background: #ede7f6;
+  color: #6750a4;
+}
+
+.card-avatar md-icon {
+  font-size: 32px;
+}
+
+.card-body {
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1c1b1f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.83rem;
+  color: #49454f;
+}
+
+.meta-item md-icon {
+  font-size: 14px;
+  color: #79747e;
+}
+
+.insurance-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: white;
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  letter-spacing: 0.3px;
 }

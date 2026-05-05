@@ -126,18 +126,26 @@ export class OrpOrApp {
       );
     }
 
+    const activeSection = segments[0] || 'rooms';
+
     return (
       <Host>
         <nav class="top-nav">
-          <button onClick={() => this.navigate("./rooms")}>
-            <md-icon>meeting_room</md-icon><span>Sály</span>
-          </button>
-          <button onClick={() => this.navigate("./patients")}>
-            <md-icon>person</md-icon><span>Pacienti</span>
-          </button>
-          <button onClick={() => this.navigate("./staff")}>
-            <md-icon>medical_services</md-icon><span>Personál</span>
-          </button>
+          <div class="nav-brand">
+            <md-icon>local_hospital</md-icon>
+            <span>OR Plánovač</span>
+          </div>
+          <div class="nav-tabs">
+            <button class={activeSection === 'rooms' ? 'active' : ''} onClick={() => this.navigate("./rooms")}>
+              <md-icon>meeting_room</md-icon><span>Sály</span>
+            </button>
+            <button class={activeSection === 'patients' ? 'active' : ''} onClick={() => this.navigate("./patients")}>
+              <md-icon>person</md-icon><span>Pacienti</span>
+            </button>
+            <button class={activeSection === 'staff' ? 'active' : ''} onClick={() => this.navigate("./staff")}>
+              <md-icon>medical_services</md-icon><span>Personál</span>
+            </button>
+          </div>
         </nav>
         <main class="content">{content}</main>
       </Host>

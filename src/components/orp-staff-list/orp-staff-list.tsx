@@ -24,32 +24,77 @@ export class OrpStaffList {
     }
   }
 
-  private roleIcon(role: string): string {
-    return role === 'doctor' ? 'medical_services' : 'health_and_safety';
-  }
-
   render() {
+    const filtered = this.staff.filter(s => !s.archived);
+    const doctors = filtered.filter(s => s.role === 'doctor');
+    const nurses = filtered.filter(s => s.role !== 'doctor');
+
+    const renderCard = (s: MedicalStaff) => (
+      <div class={`card role-${s.role}`} onClick={() => this.entryClicked.emit(s.id)}>
+        <div class="card-avatar">
+          <md-icon>{s.role === 'doctor' ? 'medical_services' : 'health_and_safety'}</md-icon>
+        </div>
+        <div class="card-body">
+          <div class="card-title">{s.firstName} {s.lastName}</div>
+          <div class="card-meta">
+            {s.specialization && (
+              <span class="meta-item"><md-icon>school</md-icon>{s.specialization}</span>
+            )}
+          </div>
+          <span class={`role-badge role-${s.role}`}>
+            {s.role === 'doctor' ? 'Lekár' : 'Zdravotná sestra'}
+          </span>
+        </div>
+      </div>
+    );
+
     return (
       <Host>
-        <h2>Zdravotnícky personál</h2>
-        {this.errorMessage
-          ? <div class="error">{this.errorMessage}</div>
-          : <md-list>
-            {this.staff.filter(s => !s.archived).map(s =>
-              <md-list-item onClick={() => this.entryClicked.emit(s.id)}>
-                <div slot="headline">{s.firstName} {s.lastName}</div>
-                <div slot="supporting-text">
-                  Rola: {s.role === 'doctor' ? 'Lekár' : 'Sestra'} · Špecializácia: {s.specialization || '–'}
+        <div class="page-header">
+          <div class="page-title">
+            <md-icon>medical_services</md-icon>
+            <h2>Zdravotnícky personál</h2>
+            <span class="count">{filtered.length}</span>
+          </div>
+          <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+            <md-icon slot="icon">person_add</md-icon>
+            Pridať personál
+          </md-filled-button>
+        </div>
+
+        {this.errorMessage ? (
+          <div class="error">{this.errorMessage}</div>
+        ) : filtered.length === 0 ? (
+          <div class="empty-state">
+            <md-icon>medical_services</md-icon>
+            <p>Žiadny zdravotnícky personál nie je evidovaný.</p>
+            <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+              <md-icon slot="icon">person_add</md-icon>
+              Pridať prvého člena
+            </md-filled-button>
+          </div>
+        ) : (
+          <div class="sections">
+            {doctors.length > 0 && (
+              <div class="section">
+                <div class="section-label">
+                  <md-icon>medical_services</md-icon>
+                  Lekári <span class="count">{doctors.length}</span>
                 </div>
-                <md-icon slot="start">{this.roleIcon(s.role)}</md-icon>
-              </md-list-item>
+                <div class="card-grid">{doctors.map(renderCard)}</div>
+              </div>
             )}
-          </md-list>
-        }
-        <md-filled-icon-button class="add-button"
-          onclick={() => this.entryClicked.emit("@new")}>
-          <md-icon>add</md-icon>
-        </md-filled-icon-button>
+            {nurses.length > 0 && (
+              <div class="section">
+                <div class="section-label">
+                  <md-icon>health_and_safety</md-icon>
+                  Zdravotné sestry <span class="count">{nurses.length}</span>
+                </div>
+                <div class="card-grid">{nurses.map(renderCard)}</div>
+              </div>
+            )}
+          </div>
+        )}
       </Host>
     );
   }
