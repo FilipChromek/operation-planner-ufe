@@ -14,6 +14,7 @@ import '@material/web/chips/chip-set'
 import '@material/web/chips/assist-chip'
 import '@material/web/chips/filter-chip'
 import '@material/web/radio/radio'
+import '@material/web/progress/circular-progress'
 
 import { registerNavigationApi } from './navigation.js'
 

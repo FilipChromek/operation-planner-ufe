@@ -50,6 +50,31 @@
   border-radius: 12px;
 }
 
+.removed-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.removed-banner md-icon { font-size: 20px; }
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: #79747e;
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;

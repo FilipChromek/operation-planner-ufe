@@ -24,22 +24,28 @@ export class OrpRoomsList {
   @Prop() apiBase: string;
   @State() errorMessage: string;
   @State() rooms: OperatingRoom[] = [];
+  @State() isLoading = true;
+  @State() removedMessage: string = '';
 
-  private async load(): Promise<OperatingRoom[]> {
+  async componentWillLoad() {
+    const msg = sessionStorage.getItem('or-planner-removed');
+    if (msg) {
+      this.removedMessage = msg;
+      sessionStorage.removeItem('or-planner-removed');
+      setTimeout(() => { this.removedMessage = ''; }, 4000);
+    }
+
     try {
       const cfg = new Configuration({ basePath: this.apiBase });
       const api = new OperatingRoomsApi(cfg);
       const resp = await api.getRoomsRaw();
-      if (resp.raw.status < 299) return await resp.value();
-      this.errorMessage = `Chyba načítania zoznamu sál: ${resp.raw.statusText}`;
+      if (resp.raw.status < 299) this.rooms = await resp.value();
+      else this.errorMessage = `Chyba načítania zoznamu sál: ${resp.raw.statusText}`;
     } catch (err: any) {
-      this.errorMessage = `Chyba pripojenia: ${err.message || "unknown"}`;
+      this.errorMessage = `Chyba pripojenia: ${err.message || 'unknown'}`;
+    } finally {
+      this.isLoading = false;
     }
-    return [];
-  }
-
-  async componentWillLoad() {
-    this.rooms = await this.load();
   }
 
   render() {
@@ -51,21 +57,33 @@ export class OrpRoomsList {
           <div class="page-title">
             <md-icon>meeting_room</md-icon>
             <h2>Operačné sály</h2>
-            <span class="count">{filtered.length}</span>
+            {!this.isLoading && <span class="count">{filtered.length}</span>}
           </div>
-          <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+          <md-filled-button onclick={() => this.entryClicked.emit('@new')}>
             <md-icon slot="icon">add</md-icon>
             Pridať sálu
           </md-filled-button>
         </div>
 
-        {this.errorMessage ? (
+        {this.removedMessage && (
+          <div class="removed-banner">
+            <md-icon>check_circle</md-icon>
+            {this.removedMessage}
+          </div>
+        )}
+
+        {this.isLoading ? (
+          <div class="loading-state">
+            <md-circular-progress indeterminate></md-circular-progress>
+            <span>Načítavam sály…</span>
+          </div>
+        ) : this.errorMessage ? (
           <div class="error">{this.errorMessage}</div>
         ) : filtered.length === 0 ? (
           <div class="empty-state">
             <md-icon>meeting_room</md-icon>
             <p>Žiadne sály nie sú evidované.</p>
-            <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+            <md-filled-button onclick={() => this.entryClicked.emit('@new')}>
               <md-icon slot="icon">add</md-icon>
               Pridať prvú sálu
             </md-filled-button>

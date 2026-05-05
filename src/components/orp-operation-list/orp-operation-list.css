@@ -1,24 +1,196 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
-  position: relative;
-  padding-bottom: 4rem;
 }
+
 header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
 }
-h2 { margin: 0; }
-.empty { margin: 3rem auto; text-align: center; color: #777; font-style: italic; }
-.error { margin: 2rem auto; color: #c00; text-align: center; font-weight: 700; }
-.add-button {
-  position: fixed;
-  right: 2rem;
-  bottom: 6rem;
-  z-index: 10;
-  --md-filled-icon-button-container-size: 4rem;
-  --md-filled-icon-button-icon-size: 3rem;
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.room-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #6750a4;
+}
+
+.room-title md-icon {
+  font-size: 24px;
+}
+
+.room-title h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1c1b1f;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.removed-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.removed-banner md-icon {
+  font-size: 20px;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: #79747e;
+}
+
+.error {
+  margin: 2rem auto;
+  color: #b3261e;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  background: #fef2f2;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  color: #79747e;
+  text-align: center;
+}
+
+.empty-state md-icon {
+  font-size: 64px;
+  color: #cac4d0;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.18s, transform 0.18s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  box-shadow: 0 6px 16px rgba(103,80,164,0.18), 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.card-accent {
+  height: 5px;
+}
+
+.card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1c1b1f;
+}
+
+.card-title md-icon {
+  color: #6750a4;
+  font-size: 20px;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  margin-top: 0.1rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.83rem;
+  color: #49454f;
+}
+
+.meta-item md-icon {
+  font-size: 14px;
+  color: #79747e;
+}
+
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border: 1.5px solid;
+  background: transparent;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.18rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  background: #e8def8;
+  color: #6750a4;
 }

@@ -17,8 +17,17 @@ export class OrpPatientsList {
   @Prop() apiBase: string;
   @State() errorMessage: string;
   @State() patients: Patient[] = [];
+  @State() isLoading = true;
+  @State() removedMessage: string = '';
 
   async componentWillLoad() {
+    const msg = sessionStorage.getItem('or-planner-removed');
+    if (msg) {
+      this.removedMessage = msg;
+      sessionStorage.removeItem('or-planner-removed');
+      setTimeout(() => { this.removedMessage = ''; }, 4000);
+    }
+
     try {
       const cfg = new Configuration({ basePath: this.apiBase });
       const api = new PatientsApi(cfg);
@@ -26,7 +35,9 @@ export class OrpPatientsList {
       if (resp.raw.status < 299) this.patients = await resp.value();
       else this.errorMessage = `Chyba: ${resp.raw.statusText}`;
     } catch (err: any) {
-      this.errorMessage = `Chyba pripojenia: ${err.message || "unknown"}`;
+      this.errorMessage = `Chyba pripojenia: ${err.message || 'unknown'}`;
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -39,21 +50,33 @@ export class OrpPatientsList {
           <div class="page-title">
             <md-icon>person</md-icon>
             <h2>Pacienti</h2>
-            <span class="count">{filtered.length}</span>
+            {!this.isLoading && <span class="count">{filtered.length}</span>}
           </div>
-          <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+          <md-filled-button onclick={() => this.entryClicked.emit('@new')}>
             <md-icon slot="icon">person_add</md-icon>
             Pridať pacienta
           </md-filled-button>
         </div>
 
-        {this.errorMessage ? (
+        {this.removedMessage && (
+          <div class="removed-banner">
+            <md-icon>check_circle</md-icon>
+            {this.removedMessage}
+          </div>
+        )}
+
+        {this.isLoading ? (
+          <div class="loading-state">
+            <md-circular-progress indeterminate></md-circular-progress>
+            <span>Načítavam pacientov…</span>
+          </div>
+        ) : this.errorMessage ? (
           <div class="error">{this.errorMessage}</div>
         ) : filtered.length === 0 ? (
           <div class="empty-state">
             <md-icon>person_search</md-icon>
             <p>Žiadni pacienti nie sú evidovaní.</p>
-            <md-filled-button onclick={() => this.entryClicked.emit("@new")}>
+            <md-filled-button onclick={() => this.entryClicked.emit('@new')}>
               <md-icon slot="icon">person_add</md-icon>
               Pridať prvého pacienta
             </md-filled-button>
@@ -74,7 +97,8 @@ export class OrpPatientsList {
                     )}
                   </div>
                   {p.insurance && (
-                    <span class="insurance-badge" style={{ background: INSURANCE_COLOR[p.insurance] || '#455a64' }}>
+                    <span class="insurance-badge"
+                      style={{ background: INSURANCE_COLOR[p.insurance] || '#455a64' }}>
                       {p.insurance}
                     </span>
                   )}

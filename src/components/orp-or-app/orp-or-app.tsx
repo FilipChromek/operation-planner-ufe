@@ -77,6 +77,7 @@ export class OrpOrApp {
             this.navigate(`./rooms/${segments[1]}/operations/${ev.detail}`)
           }
           onback-clicked={() => this.navigate("./rooms")}
+          onedit-room-clicked={() => this.navigate(`./rooms/${segments[1]}/edit`)}
         />
       );
     } else if (segments[0] === "patients" && segments[1]) {
@@ -84,7 +85,10 @@ export class OrpOrApp {
         <orp-patient-editor
           entry-id={segments[1]}
           api-base={this.apiBase}
-          oneditor-closed={() => this.navigate("./patients")}
+          oneditor-closed={(ev: CustomEvent<string>) => {
+            if (ev.detail === 'archive') sessionStorage.setItem('or-planner-removed', 'Pacient bol úspešne archivovaný.');
+            this.navigate("./patients");
+          }}
         />
       );
     } else if (segments[0] === "patients") {
