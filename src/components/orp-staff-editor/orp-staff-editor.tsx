@@ -66,22 +66,6 @@ export class OrpStaffEditor {
     return this.isValid;
   }
 
-  private addAvailabilitySlot() {
-    const now = new Date();
-    const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    const end = new Date(tomorrow.getTime() + 8 * 60 * 60 * 1000);
-    this.member.availability = [
-      ...(this.member.availability || []),
-      { from: tomorrow, to: end }
-    ];
-    this.member = { ...this.member };
-  }
-
-  private removeSlot(idx: number) {
-    this.member.availability.splice(idx, 1);
-    this.member = { ...this.member };
-  }
-
   private async save() {
     if (!this.validateForm('show-errors')) return;
     const isNew = !this.entryId || this.entryId === "@new";
@@ -139,24 +123,6 @@ export class OrpStaffEditor {
             <md-icon slot="leading-icon">school</md-icon>
           </md-filled-text-field>
         </form>
-
-        <div class="availability">
-          <div class="section-header">
-            <span class="label">Dostupnosť (pracovné zmeny):</span>
-            <md-outlined-button onClick={() => this.addAvailabilitySlot()}>
-              <md-icon slot="icon">add</md-icon>
-              Pridať smenu
-            </md-outlined-button>
-          </div>
-          {(this.member.availability || []).map((slot, idx) =>
-            <div class="slot">
-              <span>{new Date(slot.from).toLocaleString()} → {new Date(slot.to).toLocaleString()}</span>
-              <md-outlined-button onClick={() => this.removeSlot(idx)}>
-                <md-icon slot="icon">delete</md-icon>
-              </md-outlined-button>
-            </div>
-          )}
-        </div>
 
         <md-divider inset></md-divider>
 
