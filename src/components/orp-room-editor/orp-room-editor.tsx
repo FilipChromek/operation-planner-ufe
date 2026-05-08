@@ -16,7 +16,30 @@ export class OrpRoomEditor {
   @State() isValid: boolean;
   @State() equipmentText: string = "";
   private formElement: HTMLFormElement;
-
+  private defaultPredefinedProcedures() {
+  return [
+    {
+      code: 'appendectomy',
+      name: 'Apendektómia',
+      typicalDurationMinutes: 60,
+    },
+    {
+      code: 'cholecystectomy',
+      name: 'Cholecystektómia',
+      typicalDurationMinutes: 90,
+    },
+    {
+      code: 'hernia-repair',
+      name: 'Operácia prietrže',
+      typicalDurationMinutes: 75,
+    },
+    {
+      code: 'knee-arthroscopy',
+      name: 'Artroskopia kolena',
+      typicalDurationMinutes: 45,
+    },
+  ];
+}
   async componentWillLoad() {
     if (!this.entryId || this.entryId === "@new") {
       this.room = {
@@ -28,7 +51,7 @@ export class OrpRoomEditor {
         equipment: [],
         status: "active" as any,
         scheduledOperations: [],
-        predefinedProcedures: [],
+        predefinedProcedures: this.defaultPredefinedProcedures(),
       };
       this.equipmentText = "";
       this.isValid = false;
